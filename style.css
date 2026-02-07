@@ -1,0 +1,195 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    height: 100vh;
+    height: 100dvh;
+    /* Better mobile support */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+/* Background - Dark Gradient with Punkish Pink Tones */
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    /* Fallback */
+    background: radial-gradient(circle at 50% 50%, #2b1026, #000000);
+    /* Adding some punkish flair with a slightly noisy or texture feel via gradient overlays if needed, but keeping it smooth as requested */
+    background: linear-gradient(to bottom right, #1a0b14, #000000);
+    z-index: -1;
+}
+
+/* Adding a subtle pink glow to the background */
+.background::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 20, 147, 0.15) 0%, transparent 60%);
+    animation: moveGlow 15s infinite alternate;
+}
+
+@keyframes moveGlow {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(10%, 10%);
+    }
+}
+
+/* Glassmorphism Card */
+.card {
+    position: relative;
+    width: 90%;
+    max-width: 450px;
+    padding: 40px 30px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    text-align: center;
+    transition: all 0.5s ease;
+    overflow: hidden;
+    /* Important for keeping the NO button inside conceptually, though we handle movement via JS constraints */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    /* Give enough space for movement */
+}
+
+/* Animations */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.pulse-hearts {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.pulse-hearts-single {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    animation: pulse 2s infinite ease-in-out;
+}
+
+/* Typography */
+.main-question {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.supporting-text {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 40px;
+    line-height: 1.5;
+}
+
+/* Buttons */
+.buttons-container {
+    position: relative;
+    /* Context for absolute positioning of NO button if needed later, but we use fixed layout initially */
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    height: 60px;
+    /* Fixed height to reserve space */
+    align-items: center;
+}
+
+.btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.btn-yes {
+    background: linear-gradient(135deg, #ff69b4, #ff1493);
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4);
+    z-index: 10;
+    /* Ensure YES is always clickable */
+}
+
+.btn-yes:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 20, 147, 0.6);
+}
+
+.btn-no {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    /* Position will be changed to absolute via JS on interaction */
+}
+
+/* Success Message */
+.hidden {
+    display: none;
+}
+
+#successContent {
+    animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.success-message {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    white-space: pre-line;
+    /* Respect newlines in text */
+}
